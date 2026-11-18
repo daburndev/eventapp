@@ -16,12 +16,12 @@ notes from the Windows PC don't move with the code, but everything it needs is i
 
 ## 1. Get the code onto the Mac
 
-The code lives in a private GitHub repo (see "Setting up the GitHub repo" at the end if that isn't done yet).
+The code lives on GitHub: https://github.com/daburndev/eventapp (branch `main`).
 
 ```bash
 xcode-select --install          # gives you git, once
-git clone https://github.com/<you>/camskynet.git
-cd camskynet
+git clone https://github.com/daburndev/eventapp.git
+cd eventapp
 ```
 
 Install **Node 24** (https://nodejs.org, "LTS" or 24.x), then:
@@ -76,20 +76,18 @@ npm run deploy
 - **After the event:** press **End event** in `/admin` (or let `event_ends_at` pass). Everything left is deleted.
 - **Supabase free plan** pauses a project after a week with no visits: open the site once in the days before.
 
-## Setting up the GitHub repo (once, from the Windows PC)
+## Saving your work back to GitHub
 
-1. On github.com → **New repository** → name `camskynet`, **Private**, no README/licence.
-2. In this folder:
-   ```bash
-   git init -b main
-   git add .
-   git commit -m "CamSkynet: #POPFOUNDHERPRINCE wedding release"
-   git remote add origin https://github.com/<you>/camskynet.git
-   git push -u origin main
-   ```
-   Git for Windows opens a browser window to sign in to GitHub the first time.
-3. Check on github.com that `.env.local`, `.dev.vars` and `scripts/load/.env.load` are **not** in the repo
-   (`.gitignore` excludes them).
+The repo was created and pushed from the Windows PC on 2026-11-19. After changing things on the Mac:
+
+```bash
+git add -A
+git commit -m "Describe the change"
+git push
+```
+
+`.gitignore` keeps `.env.local`, `.dev.vars` and `scripts/load/.env.load` out of the repo; check `git status`
+before committing if you add new secret files.
 
 ## Useful docs in this repo
 
