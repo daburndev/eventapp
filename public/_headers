@@ -1,0 +1,14 @@
+/_next/static/*
+  Cache-Control: public,max-age=31536000,immutable
+
+# Browsers must always check for a new service worker.
+/sw.js
+  Cache-Control: no-cache
+
+# Screen background video: 10 MB, so screens keep it for a day instead of re-checking each load.
+/Popfoundherprince.mp4
+  Cache-Control: public, max-age=86400
+
+# Idle-screen saver photos: screens keep them for a day.
+/savers/*
+  Cache-Control: public, max-age=86400

@@ -1,0 +1,57 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "camskynet",
+  // Custom entry: OpenNext's fetch handler + our cron (PDPA photo purge). See worker/index.js.
+  "main": "worker/index.js",
+  // nodejs_compat lets Next.js server code use Node APIs inside the Worker.
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "camskynet"
+    }
+  ],
+  // Guest photos. Deleted by the cron when events end; a 3-day bucket lifecycle rule is the safety net.
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS",
+      "bucket_name": "camskynet-photos"
+    }
+  ],
+  // Every request makes 1–2 Supabase calls; run the Worker near Supabase (Singapore).
+  "placement": {
+    "mode": "smart"
+  },
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "env": {
+    // Load tests and PDPA checks run here, against a separate Supabase project.
+    "staging": {
+      "name": "camskynet-staging",
+      "services": [
+        {
+          "binding": "WORKER_SELF_REFERENCE",
+          "service": "camskynet-staging"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "PHOTOS",
+          "bucket_name": "camskynet-photos-staging"
+        }
+      ],
+      "triggers": {
+        "crons": ["* * * * *"]
+      }
+    }
+  }
+}

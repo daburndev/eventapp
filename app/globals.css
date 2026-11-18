@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Design tokens (CODING_STYLE §13). Components use these via Tailwind classes such as
+   bg-surface, text-muted, border-line, bg-accent — never raw hex values. */
+:root {
+  --surface: #f7f6fb;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eceaf4;
+  --line: #dcd8e8;
+  --text: #17141f;
+  --muted: #625c74;
+  --accent: #7c3aed;
+  --accent-strong: #6d28d9;
+  --on-accent: #ffffff;
+  --success: #15803d;
+  --danger: #dc2626;
+  --warning: #b45309;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #0d0b14;
+    --surface-raised: #17141f;
+    --surface-sunken: #08070d;
+    --line: #2c2738;
+    --text: #f4f2fa;
+    --muted: #a39cb8;
+    --accent: #a78bfa;
+    --accent-strong: #c4b5fd;
+    --on-accent: #120d1f;
+    --success: #4ade80;
+    --danger: #f87171;
+    --warning: #fbbf24;
+  }
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  /* Event screen (projector): a bold Thai + Latin display face and the #POPFOUNDHERPRINCE palette. */
+  --font-display: var(--font-kanit);
+  --color-event-cocoa: #724319;
+  --color-event-rose: #d88180;
+  --color-event-blush: #f7b1b0;
+  --color-event-cream: #feeac7;
+  --color-event-sage: #cad182;
+}
+
+/*
+ * Event screen unit (projector): 1su is 1% of the largest 16:9 area that fits the screen.
+ * Corner elements are sized and spaced in su, so on any screen shape (16:9, 4:3, ultrawide,
+ * portrait) they keep their proportions and sit the same distance from every edge.
+ */
+.screen-units {
+  --su: min(1vw, 1.7778vh);
+}
+
+body {
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}

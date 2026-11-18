@@ -1,0 +1,9 @@
+# Copy to .dev.vars for `npm run dev` / `npm run preview` (Cloudflare bindings). Never commit .dev.vars.
+NEXTJS_ENV=development
+# Used by the Worker cron that deletes photos from R2 (PDPA). In production:
+#   npx wrangler secret put SUPABASE_URL
+#   npx wrangler secret put SUPABASE_SECRET_KEY
+SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+SUPABASE_SECRET_KEY=sb_secret_xxx
+# Optional bot protection on the guest form (Cloudflare Turnstile). Leave unset in dev to skip.
+# TURNSTILE_SECRET_KEY=0x...
