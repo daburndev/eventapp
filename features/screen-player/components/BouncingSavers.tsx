@@ -115,7 +115,7 @@ function bounceOffWalls(body: Body, width: number, height: number): boolean {
 
 /**
  * DVD-style screen saver: the photos bounce off the screen edges and off the QR code (`obstacleRef`),
- * changing border color on every bounce and switching to another random photo every few bounces.
+ * changing border color and switching to another random photo on every bounce.
  * Positions live in refs and are written straight to `transform`, so animating never re-renders React.
  */
 export function BouncingSavers({ obstacleRef }: { obstacleRef: RefObject<HTMLElement | null> }) {

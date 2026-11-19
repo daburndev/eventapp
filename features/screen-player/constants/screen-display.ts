@@ -6,7 +6,7 @@ export const SCREEN_QR_RESOLUTION = 600;
 
 /**
  * Cutout photos (transparent WebP, trimmed to the people) for the idle-screen saver. Three are on screen at once,
- * and each swaps to a random photo not already showing every few bounces. `aspectRatio` is width / height.
+ * and each swaps to a random photo not already showing on every bounce. `aspectRatio` is width / height.
  * The first three are the starting set.
  */
 export const SCREEN_SAVER_PHOTOS = [
@@ -25,10 +25,25 @@ export const SCREEN_SAVER_PHOTOS = [
   { src: "/savers/11.webp", aspectRatio: 1077 / 800 },
   { src: "/savers/12.webp", aspectRatio: 1139 / 800 },
   { src: "/savers/13.webp", aspectRatio: 967 / 800 },
+  { src: "/savers/14.webp", aspectRatio: 737 / 800 },
+  { src: "/savers/15.webp", aspectRatio: 325 / 800 },
+  { src: "/savers/16.webp", aspectRatio: 1045 / 800 },
+  { src: "/savers/17.webp", aspectRatio: 764 / 800 },
+  { src: "/savers/18.webp", aspectRatio: 667 / 800 },
+  { src: "/savers/19.webp", aspectRatio: 776 / 800 },
+  { src: "/savers/20.webp", aspectRatio: 601 / 800 },
+  { src: "/savers/21.webp", aspectRatio: 481 / 800 },
+  { src: "/savers/22.webp", aspectRatio: 615 / 800 },
+  { src: "/savers/23.webp", aspectRatio: 524 / 800 },
+  { src: "/savers/24.webp", aspectRatio: 689 / 800 },
+  { src: "/savers/25.webp", aspectRatio: 762 / 800 },
+  { src: "/savers/26.webp", aspectRatio: 719 / 800 },
+  { src: "/savers/27.webp", aspectRatio: 789 / 800 },
+  { src: "/savers/28.webp", aspectRatio: 825 / 800 },
 ] as const;
 export const SCREEN_SAVERS_ON_SCREEN = 3;
-/** A saver swaps to another photo on every Nth bounce (its border color still changes on every bounce). */
-export const SCREEN_SAVER_BOUNCES_PER_PHOTO = 3;
+/** A saver swaps to another photo on every Nth bounce (1 = every bounce); its border color changes on every bounce. */
+export const SCREEN_SAVER_BOUNCES_PER_PHOTO = 1;
 /** Speed along each axis, as a fraction of the screen width per second (the same on any screen size). */
 export const SCREEN_SAVER_SPEED = 0.09;
 /** Event palette: each saver's outline switches to a random one of these whenever it bounces. */
