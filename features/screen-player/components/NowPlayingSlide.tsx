@@ -4,6 +4,12 @@ import type { Submission } from "@/interfaces/submission/submission";
 
 // Instagram / LINE rows: the platform logo, then the handle.
 const CONTACT_LINE = "flex items-center gap-[0.35em] text-[3vw] font-extrabold";
+// Where the text column sits so it never runs under the top-right QR corner (about the top 36vh of the right 20vw):
+// - next to a photo, the column is on the right, so it starts below the QR;
+// - with no photo, it's centred on the screen: side padding keeps it out of the QR's column, and the bottom
+//   padding matches the slide's top padding so the block's centre is the screen's centre.
+const TEXT_WITH_PHOTO = "pt-[27vh]";
+const TEXT_ONLY = "items-center px-[17vw] pb-[5vh] text-center";
 
 interface NowPlayingSlideProps {
   submission: Submission;
@@ -14,7 +20,7 @@ export function NowPlayingSlide({ submission, progress }: NowPlayingSlideProps) 
   const hasPhoto = Boolean(submission.photoPath);
 
   return (
-    // Top/bottom padding clears the event header; the text column starts below the top-right QR corner.
+    // Top/bottom padding clears the event header and the progress bar.
     <div className="relative flex h-full w-full items-center gap-[4vw] px-[4vw] pt-[11vh] pb-[6vh]">
       {hasPhoto ? (
         <SubmissionPhoto
@@ -25,7 +31,7 @@ export function NowPlayingSlide({ submission, progress }: NowPlayingSlideProps) 
         />
       ) : null}
       <div
-        className={`flex min-w-0 flex-1 flex-col justify-center gap-[2vh] self-stretch pt-[27vh] text-white drop-shadow-lg ${hasPhoto ? "" : "items-center text-center"}`}
+        className={`flex min-w-0 flex-1 flex-col justify-center gap-[2vh] self-stretch text-white drop-shadow-lg ${hasPhoto ? TEXT_WITH_PHOTO : TEXT_ONLY}`}
       >
         <p className="text-[5vw] leading-tight font-extrabold break-words">{submission.message}</p>
         {submission.instagram ? (
