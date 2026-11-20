@@ -4,12 +4,19 @@ export const SCREEN_QR_PROMPT = "แจกวาร์ปหน่อยค้�
 /** QR image resolution in pixels; it's displayed at a viewport-relative size so it stays sharp on 4K screens. */
 export const SCREEN_QR_RESOLUTION = 600;
 
+export interface ScreenSaverPhoto {
+  src: string;
+  /** Width / height. */
+  aspectRatio: number;
+  /** Decoration (word art, heart) rather than a photo of people: drawn smaller, see SCREEN_SAVER_STICKER_SIZE_SU. */
+  sticker?: boolean;
+}
+
 /**
- * Cutout photos (transparent WebP, trimmed to the people) for the idle-screen saver. Three are on screen at once,
- * and each swaps to a random photo not already showing on every bounce. `aspectRatio` is width / height.
- * The first three are the starting set.
+ * Cutout photos (transparent WebP, trimmed to the content) for the idle-screen saver. Three are on screen at once,
+ * and each swaps to a random photo not already showing on every bounce. The first three are the starting set.
  */
-export const SCREEN_SAVER_PHOTOS = [
+export const SCREEN_SAVER_PHOTOS: readonly ScreenSaverPhoto[] = [
   { src: "/savers/saver1.webp", aspectRatio: 863 / 800 },
   { src: "/savers/saver2.webp", aspectRatio: 855 / 800 },
   { src: "/savers/1.webp", aspectRatio: 671 / 800 },
@@ -40,8 +47,30 @@ export const SCREEN_SAVER_PHOTOS = [
   { src: "/savers/26.webp", aspectRatio: 719 / 800 },
   { src: "/savers/27.webp", aspectRatio: 789 / 800 },
   { src: "/savers/28.webp", aspectRatio: 825 / 800 },
-] as const;
+  { src: "/savers/29.webp", aspectRatio: 562 / 800 },
+  { src: "/savers/30.webp", aspectRatio: 1146 / 800 },
+  { src: "/savers/31.webp", aspectRatio: 1126 / 800 },
+  { src: "/savers/32.webp", aspectRatio: 1063 / 800 },
+  { src: "/savers/33.webp", aspectRatio: 943 / 800 },
+  { src: "/savers/34.webp", aspectRatio: 763 / 800 },
+  { src: "/savers/35.webp", aspectRatio: 600 / 800 },
+  { src: "/savers/36.webp", aspectRatio: 622 / 800 },
+  { src: "/savers/37.webp", aspectRatio: 508 / 800 },
+  // 38-41 are word art (POP / PRINCE) and 42 a heart: drawn as small stickers.
+  { src: "/savers/38.webp", aspectRatio: 2444 / 800, sticker: true },
+  { src: "/savers/39.webp", aspectRatio: 4216 / 800, sticker: true },
+  { src: "/savers/40.webp", aspectRatio: 1805 / 800, sticker: true },
+  { src: "/savers/41.webp", aspectRatio: 3523 / 800, sticker: true },
+  { src: "/savers/42.webp", aspectRatio: 860 / 800, sticker: true },
+];
 export const SCREEN_SAVERS_ON_SCREEN = 3;
+/**
+ * Largest box a saver fits in, in screen units (--su; the screen is 100su wide). Photos are 19su tall so every photo
+ * of the couple reads at one scale (none is wide enough to reach the width limit).
+ */
+export const SCREEN_SAVER_PHOTO_SIZE_SU = { maxHeight: 19, maxWidth: 40 } as const;
+/** Stickers are smaller, so the photos stay the focus: wide word art is limited by width, the heart by height. */
+export const SCREEN_SAVER_STICKER_SIZE_SU = { maxHeight: 9, maxWidth: 22 } as const;
 /** A saver swaps to another photo on every Nth bounce (1 = every bounce); its border color changes on every bounce. */
 export const SCREEN_SAVER_BOUNCES_PER_PHOTO = 1;
 /** Speed along each axis, as a fraction of the screen width per second (the same on any screen size). */

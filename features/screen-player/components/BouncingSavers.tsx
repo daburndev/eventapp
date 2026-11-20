@@ -5,9 +5,12 @@ import { useEffect, useRef, type RefObject } from "react";
 import {
   SCREEN_SAVER_BORDER_COLORS,
   SCREEN_SAVER_BOUNCES_PER_PHOTO,
+  SCREEN_SAVER_PHOTO_SIZE_SU,
   SCREEN_SAVER_PHOTOS,
+  SCREEN_SAVER_STICKER_SIZE_SU,
   SCREEN_SAVER_SPEED,
   SCREEN_SAVERS_ON_SCREEN,
+  type ScreenSaverPhoto,
 } from "@/features/screen-player/constants/screen-display";
 
 // After a hidden tab or a slow frame, move at most this far in one step so nothing jumps through a wall.
@@ -31,6 +34,15 @@ const OUTLINE_FILTER = [
   `drop-shadow(0 ${borderOffset(-1)} 0 var(${BORDER_COLOR_VAR}))`,
   "drop-shadow(0 calc(var(--su) * 0.85) calc(var(--su) * 0.85) rgb(0 0 0 / 0.45))",
 ].join(" ");
+
+/**
+ * CSS height that fits this photo's shape in its size box (photo or sticker). In screen units, so portrait screens
+ * don't get oversized photos; the width follows from `aspect-ratio`.
+ */
+function saverHeight(photo: ScreenSaverPhoto): string {
+  const box = photo.sticker ? SCREEN_SAVER_STICKER_SIZE_SU : SCREEN_SAVER_PHOTO_SIZE_SU;
+  return `calc(var(--su) * ${Math.min(box.maxHeight, box.maxWidth / photo.aspectRatio)})`;
+}
 
 /** A random photo that no saver is showing right now. */
 function pickPhoto(showing: number[]): number {
@@ -193,6 +205,7 @@ export function BouncingSavers({ obstacleRef }: { obstacleRef: RefObject<HTMLEle
       const centerY = body.y + body.height / 2;
 
       elements[index].style.aspectRatio = String(photo.aspectRatio);
+      elements[index].style.height = saverHeight(photo);
       images[index]?.setAttribute("src", photo.src);
       body.photoIndex = photoIndex;
       body.width = elements[index].offsetWidth;
@@ -245,11 +258,10 @@ export function BouncingSavers({ obstacleRef }: { obstacleRef: RefObject<HTMLEle
           ref={(element) => {
             saverRefs.current[index] = element;
           }}
-          style={{ aspectRatio: photo.aspectRatio }}
-          // Sized by height (in screen units, so portrait screens don't get oversized photos) so every photo
-          // of the couple reads at the same scale; the width follows its shape.
+          // Sized by height (see saverHeight) so every photo of the couple reads at the same scale.
+          style={{ aspectRatio: photo.aspectRatio, height: saverHeight(photo) }}
           // Invisible until the first frame places it, so it never flashes in the top-left corner.
-          className="invisible absolute top-0 left-0 h-[calc(var(--su)*19)] will-change-transform"
+          className="invisible absolute top-0 left-0 will-change-transform"
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- static event photos; no resizing service on Workers */}
           <img src={photo.src} alt="" style={{ filter: OUTLINE_FILTER }} className="h-full w-full object-contain" />
